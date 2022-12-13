@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block header %}
+  <h1>{% block title %}Ics form{% endblock %}</h1>
+{% endblock %}
+{% block content %}
+  <form action="/ics/upload" method=post enctype="multipart/form-data">
+    <div class="form">
+      <label for="upload">A file</label>
+      <input type="file" name="file">
+      <label for="start">Start date</label>
+      <input type="date" name="start-date" id="">
+      <label for="end">End date</label>
+      <input type="date" name="end-date" id="">
+      <input type="submit" value="Totaling">
+    </div>
+  </form>
+{% endblock %}

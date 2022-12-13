@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block header %}
+  <h1>{% block title %}Ics totaling results({{ filename }}){% endblock %}</h1>
+{% endblock %}
+{% block content %}
+  <h2>{{ startDate }} ~ {{ endDate }}</h2>
+  {% if resultList %}
+  <table class="tbl">
+    <thead>
+      <th>Task name</th>
+      <th>Time(h)</th>
+    </thead>
+    <tbody>
+      {% for el in resultList %}
+        <tr>
+          <td>{{ el["name"] }}</td>
+          <td>{{ el["hours"] }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+    <h1>Hello, World!</h1>
+  {% endif %}
+  {% if dateList %}
+    <h2>Total time each day</h2>
+    <table class="tbl">
+      <thead>
+        <th>year, month, day</th>
+        <th>Time(h)</th>
+      </thead>
+      <tbody>
+      {% for el in dateList %}
+        <tr>
+          <td>{{ el["date"] }}</td>
+          <td>{{ el["hours"] }}</td> 
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+  {% endif %}
+{% endblock %}

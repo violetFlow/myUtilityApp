@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block header %}
+  <h1>{% block title %}Account list{% endblock %}</h1>
+{% endblock %}
+{% block content %}
+<a href="{{ url_for('account_register_form')}}">Account register</a>
+<table class="tbl">
+  <thead>
+    <th>Index</th>
+    <th>Category</th>
+    <th>Id</th>
+    <th>Pw</th>
+    <th>Etc</th>
+    <th>Edit</th>
+    <th>Copy</th>
+    <th>Delete</th>
+  </thead>
+  <tbody>
+    {% for el in lists %}
+      <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ el["category"] }}</td>
+        <td>{{ el["id"] }}</td>
+        <td>
+          <input type="text" value="{{ el['pw'] }}" id="pwIndex{{loop.index}}" >
+        </td>
+        <td>{{ el["etc"] }}</td>
+        <td>
+          <a href="{{ url_for('account_edit_form', accountid=el['accountid'])}}">Edit page</a>
+        </td>
+        <td>
+          <input type="button" id="pwCopy{{loop.index}}" value="copy" class="pwCopyBtn">
+        </td>
+        <td>
+          <input type="button" id="accountDelete{{el['accountid']}}" value="delete" class="delete">
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<script src="../static/js/accountEvents.js"></script>
+{% endblock %}
+
+

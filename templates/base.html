@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="icon" href="/static/img/hitsuji.png" />
+<link rel="stylesheet" type="text/css" href="/static/css/base.css" />
+<title>{% block title %}{% endblock%} - My utility application</title>
+<head>
+</head>
+<nav>
+  <ul>
+    <li><a href="{{ url_for('init')}}"class="active">Top</a></li>
+    <li><a href="{{ url_for('ics_analysis_form')}}">Ics analysis form</a></li>
+    <li><a href="{{ url_for('account_list')}}">Account list</a></li>
+  </ul>
+</nav>
+<section class="sec">
+  <header>
+    {% block header %}{% endblock %}
+  </header>
+  {% block content %}{% endblock %}
+</section>
+</html>

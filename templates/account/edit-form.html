@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block header %}
+  <h1>{% block title %}Account edit form{% endblock %}</h1>
+{% endblock %}
+{% block content %}
+<form action="edit" method="post">
+  <div class="form">
+    <input type="hidden" name="accountid" id="accountid" value="{{ account.accountid }}">
+    <label for="category">category</label>
+    <input type="text" name="category" id="category" value="{{ account.category }}">
+    <label for="id">id</label>
+    <input type="text" name="id" id="id" value="{{ account.id }}">
+    <label for="pw">pw</label>
+    <input type="text" name="pw" id="pw" value="{{ account.pw }}">
+    <label for="etc">etc</label>
+    <input type="text" name="etc" id="etc" value="{{ account.etc }}">
+    <input type="submit" value="submit">
+  </div>
+</form>
+{% endblock %}
+
+

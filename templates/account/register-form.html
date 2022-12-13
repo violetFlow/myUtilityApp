@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block header %}
+  <h1>{% block title %}Account register form{% endblock %}</h1>
+{% endblock %}
+{% block content %}
+<form action="regist" method="post">
+  <div class="form">
+    <label for="category">category</label>
+    <input type="text" name="category" id="category">
+    <label for="id">id</label>
+    <input type="text" name="id" id="id">
+    <label for="pw">pw</label>
+    <input type="text" name="pw" id="pw">
+    <label for="etc">etc</label>
+    <input type="text" name="etc" id="etc">
+    <input type="submit" value="submit">
+  </div>
+</form>
+{% endblock %}
+
+
