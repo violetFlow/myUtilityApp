@@ -4,8 +4,16 @@
 システムの業務上、便利なツールをまとめたウェブアプリケーション
 
 ## 使用技術
- - server : python Flask
- - front : jinjar2 template engine 
+ - Programing language
+   - python 3.7
+ - Frameworks
+   - Flask
+ - Template engine
+   - jinjar2
+ - PaaS products
+   - docker
+ - Database
+   - postgreSQL 13.5
 
 ## 起動方法
 ```bash
