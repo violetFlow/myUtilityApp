@@ -12,8 +12,13 @@
    - jinjar2
  - PaaS products
    - docker
+   - docker-compose
  - Database
    - postgreSQL 13.5
+ - ORM
+   - flask-sqlalchemy
+ - Library
+   - Pandas  
 
 ## 起動方法
 ```bash
