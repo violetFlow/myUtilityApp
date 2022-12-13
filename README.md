@@ -37,7 +37,7 @@ docker inspect <docker-postgre-dbのcontainer id> | grep IPAddress
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:postgres@172.18.0.3:5432/postgres"
 
 # uploadファイルはgitで管理しないため、フォルダを作成する。
-mkdir myUtilityApp/upload
+mkdir upload
 ```
 
 
