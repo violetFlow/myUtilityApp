@@ -11,7 +11,7 @@ from sqlalchemy.exc import SQLAlchemyError
 import logging
 
 # logging config
-logging.basicConfig(filename='application.log',format='%(asctime)s %(message)s', level=logging.DEBUG)
+logging.basicConfig(filename='application.log',format='%(asctime)s - %(levelname)s - %(message)s', level=logging.DEBUG)
 
 # const
 UPLOAD_FOLDER = '/app/upload'
