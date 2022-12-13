@@ -4,15 +4,17 @@
 システムの業務上、便利なツールをまとめたウェブアプリケーション
 
 ## 使用技術
+ - Os
+   - Debian GNU/Linux 11 (bullseye)
  - Programing language
    - python 3.7
  - Frameworks
-   - Flask
+   - Flask 2.2.2
  - Template engine
    - jinjar2
  - PaaS products
-   - docker
-   - docker-compose
+   - docker 20.10.21
+   - docker-compose 2.13.0
  - Database
    - postgreSQL 13.5
  - ORM
