@@ -23,13 +23,10 @@ accountDeleteObj.forEach(elm => {
     const result = window.confirm('本当に消しますか。accountid:'+ accountId);
 
     if (result) {
-      console.log('Yes')
       const req = '/account/delete/' + accountId;
-      fetch(req, {method: 'GET'});
-      window.location.href ='/';
-    } else {
-      console.log('No')
-      return
-    }
+      const result = fetch(req, {method: 'GET'});
+      console.log(result);
+      window.location.href='/'
+    } 
   })
 });

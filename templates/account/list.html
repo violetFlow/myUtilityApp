@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% block header %}
   <h1>{% block title %}Account list{% endblock %}</h1>
+  <input type="button" id="regist" value="Registration" onclick="window.location.href='/account/register-form'">
 {% endblock %}
 {% block content %}
-<a href="{{ url_for('account_register_form')}}">Account register</a>
 <table class="tbl">
   <thead>
     <th>Index</th>
@@ -38,7 +38,7 @@
     {% endfor %}
   </tbody>
 </table>
-<script src="../static/js/accountEvents.js"></script>
+<script src="/static/js/accountEvents.js"></script>
 {% endblock %}
 
 

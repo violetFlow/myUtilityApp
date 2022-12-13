@@ -4,11 +4,14 @@ import os
 from flask import Flask
 from flask import render_template
 from flask.globals import request
-from flask.helpers import url_for
 from werkzeug.utils import redirect
 from werkzeug.utils import secure_filename
 from flask_sqlalchemy import SQLAlchemy
-import click
+from sqlalchemy.exc import SQLAlchemyError
+import logging
+
+# logging config
+logging.basicConfig(filename='application.log',format='%(asctime)s %(message)s', level=logging.DEBUG)
 
 # const
 UPLOAD_FOLDER = '/app/upload'
@@ -21,6 +24,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:postgres@172.18.0.3:5432/postgres"
 db = SQLAlchemy(app)
 
+# Account table
 class Account(db.Model):
     accountid = db.Column(db.Integer, primary_key=True)
     id = db.Column(db.String(64))
@@ -28,6 +32,7 @@ class Account(db.Model):
     category = db.Column(db.String(64))
     etc = db.Column(db.String(120))
 
+# First started method when launched application. 
 @app.before_first_request
 def initdb():
     db.create_all()
@@ -66,7 +71,6 @@ def upload_file():
 
     '''
         Get total time working
-        
     '''
     if file and allowed_file(file.filename):
         startDate = request.form['start-date']
@@ -89,11 +93,14 @@ def upload_file():
 @app.route('/account/list', methods=['GET'])
 def account_list():
     try:
-        # accountテーブルの並び順をcategory順で指定
+        # Get datas
         datas = Account.query.order_by(Account.category).all()
-        print(0)
-    except print(0):
+        print(datas)
+    except SQLAlchemyError as e:
+        logging.ERROR(e)
         pass
+    finally:
+        db.session.close()
 
     return render_template('account/list.html', lists=datas)
 
@@ -103,30 +110,39 @@ def account_register_form():
 
 @app.route('/account/regist', methods=['POST'])
 def register():
-    # データバインド
+    # Binding a new account object
     id = request.form['id']
     pw = request.form['pw']
     category = request.form['category']
     etc = request.form['etc']
     newAccount = Account(id=id, pw=pw, category=category, etc=etc)
 
-    # db処理
     try:
         db.session.add(newAccount)
         db.session.commit()
-        print(0)
-    except print(0):
-        pass
-    return redirect('/')
+
+        # Get new datas
+        datas = Account.query.order_by(Account.category).all()
+    except SQLAlchemyError as e:
+        logging.error(e)
+        db.session.rollback()
+    finally:
+        db.session.close()
+
+    return render_template('account/list.html', lists=datas)
 
 @app.route('/account/edit-form/')
 @app.route('/account/edit-form/<int:accountid>')
 def account_edit_form(accountid):
     try:
         account = db.session.get(Account, accountid)
-        print(0)
-    except print(0):
+        print(account)
+    except SQLAlchemyError as e:
+        logging.error(e)
         pass
+    finally:
+        db.session.close()
+
     return render_template('account/edit-form.html', account=account)
 
 @app.route('/account/delete/')
@@ -136,22 +152,34 @@ def account_delete(accountid):
         account = Account.query.filter_by(accountid=accountid).first()
         db.session.delete(account)
         db.session.commit()
-        print(0)
-    except print(0):
-        pass
+    except SQLAlchemyError as e:
+        logging.error(e)
+        db.session.rollback()
+    finally:
+        db.session.close()
+
     return render_template('index.html') 
 
 @app.route('/account/edit-form/edit', methods=['POST'])
 def account_edit():
-    account = Account.query.filter_by(accountid=request.form['accountid']).first()
-    account.id = request.form['id']
-    account.pw = request.form['pw']
-    account.category = request.form['category']
-    account.etc = request.form['etc']
+    logging.debug('Start database transition')
+    try:
+        account = Account.query.filter_by(accountid=request.form['accountid']).first()
+        account.id = request.form['id']
+        account.pw = request.form['pw']
+        account.category = request.form['category']
+        account.etc = request.form['etc']
+        db.session.commit()
 
-    db.session.commit()
+        # Get new datas
+        datas = Account.query.order_by(Account.category).all()
+    except SQLAlchemyError as e:
+        logging.error(e)
+        db.session.rollback()
+    finally:
+        db.session.close()
 
-    return redirect('/')
+    return render_template('account/list.html', lists=datas)
 
 if __name__ == "__main__":
   app.run(host="0.0.0.0", port=80, debug=True)

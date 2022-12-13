@@ -82,6 +82,11 @@ input[type=submit] {
 .delete {
   background-color: #ef3c25;
 }
+#regist {
+  background-color: #286ffc;
+  width: 10%;
+  text-align: center;
+}
 .pwCopyBtn {
   background-color: #4CAF50;
 }
