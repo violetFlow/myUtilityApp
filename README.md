@@ -25,23 +25,17 @@
 ## 起動方法
 ```bash
 # my-network作成
-docker network create my-network
+docker network create my_network --subnet=10.11.0.0/16
 
 # my-utility-app ビルド
 docker build -t my-utility-app:latest .
 
 # my-utility-app 実行
-docker run --net=my-network -p 5001:80 -v ${PWD}:/app -d my-utility-app
+docker run --net=my_network --ip 10.11.0.10 -p 5001:80 -v ${PWD}:/app -d my-utility-app
 
 # docker-composeを利用したpostgreSQL構築
-cd docker-compose
+cd docker-postgre
 docker-compose up -d
-
-# docker-postgre-dbのIPAdress確認
-docker inspect <docker-postgre-dbのcontainer id> | grep IPAddress
-
-# index.pyのL21のpostgreSQLのIPAdressを変更する。
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:postgres@172.18.0.3:5432/postgres"
 
 # uploadファイルはgitで管理しないため、フォルダを作成する。
 mkdir upload

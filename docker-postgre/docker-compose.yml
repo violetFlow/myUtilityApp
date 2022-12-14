@@ -10,7 +10,8 @@ services:
     ports:
       - '25432:5432'
     networks:
-      - my-network
+      my_network:
+        ipv4_address: 10.11.0.3
     deploy:
       resources:
         limits:
@@ -20,6 +21,11 @@ volumes:
   db:
     driver: local
 networks:
-  my-network:
+  my_network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.11.0.0/16
     external: true
     
