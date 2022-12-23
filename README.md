@@ -31,7 +31,7 @@ docker network create my_network --subnet=10.11.0.0/16
 docker build -t my-utility-app:latest .
 
 # my-utility-app 実行
-docker run --net=my_network --ip 10.11.0.10 -p 5001:80 -v ${PWD}:/app -d my-utility-app
+docker run --restart=always --net=my_network --ip 10.11.0.10 -p 5001:80 -v ${PWD}:/app -d my-utility-app
 
 # docker-composeを利用したpostgreSQL構築
 cd docker-postgre
